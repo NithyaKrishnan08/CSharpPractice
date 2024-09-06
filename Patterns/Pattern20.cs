@@ -19,7 +19,7 @@ using System;
 
 public class Solution
 {
-    public void Pattern19(int n)
+    public void Pattern20(int n)
     {
         InvertPattern(n);
         ErectPattern(n - 1);
@@ -81,6 +81,6 @@ class Program
     static void Main()
     {
         Solution solution = new Solution();
-        solution.Pattern19(5);
+        solution.Pattern20(5);
     }
 }
