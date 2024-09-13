@@ -39,11 +39,11 @@ class Program
         string inputString = Console.ReadLine();
         
         // precompute
-        int max = 26;
+        int max = 256;
         int[] hashArray = new int[max];
         for(int i = 0; i < inputString.Length; i++)
         {
-            hashArray[inputString[i] - 'a'] += 1;
+            hashArray[inputString[i]] += 1;
         }
         
         
@@ -57,7 +57,7 @@ class Program
             char chToSearch = Console.ReadLine()[0];
             
             // fetch
-            Console.WriteLine("No. of times: " + hashArray[chToSearch - 'a']);
+            Console.WriteLine("No. of times: " + hashArray[chToSearch]);
             
             Console.WriteLine();
             noOfElementsToSearch--;
