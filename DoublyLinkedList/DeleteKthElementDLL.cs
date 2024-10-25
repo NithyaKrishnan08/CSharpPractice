@@ -103,13 +103,11 @@ public class DoublyLinkedList
             return DeleteHeadDLL(head);
         else if(front == null) // element at tail position
             return DeleteTailDLL(head);
-        else
-        {
-            prev.next = front;
-            front.back = prev;
-            temp.next = null;
-            temp.back = null;
-        }
+        
+        prev.next = front;
+        front.back = prev;
+        temp.next = null;
+        temp.back = null;
 
         return head;
     }
