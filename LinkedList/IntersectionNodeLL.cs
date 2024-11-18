@@ -5,6 +5,11 @@ Problem Statement: Given the heads of two singly linked-lists headA and headB, r
 Brute Force Solution: 
 The intersection point: 2
 
+Better Solution: 
+The intersection point: 2
+
+Optimal Solution: 
+The intersection point: 2
 */
 
 // Find intersection of Two Linked Lists
@@ -51,6 +56,8 @@ public class LinkedList
     // Brute Force Solution
     public Node IntersectionNodeLL1(Node head1, Node head2)
     {
+        if (head1 == null || head2 == null) return null;
+        
         var visitedNodes = new HashSet<Node>();
         
         // First traversal
@@ -73,8 +80,77 @@ public class LinkedList
         return null;
     }
     
-    // Optimal Solution
+    // Better Solution - Differnce in the length
+    public Node IntersectionNodeLL2(Node head1, Node head2)
+    {
+        if (head1 == null || head2 == null) return null;
+        
+        Node temp1 = head1, temp2 = head2;
+        int len1 = 0, len2 = 0;
+        
+        // Find the length of the two linked list
+        while(temp1 != null) // O(N1)
+        {
+            len1++;
+            temp1 = temp1.next;
+        }
+        
+        while(temp2 != null) // O(N2)
+        {
+            len2++;
+            temp2 = temp2.next;
+        }
+        
+        // Difference in the length of LL
+        if(len1 > len2)
+            return FindIntersectionAfterAlignment(head2, head1, len1 - len2);
+        else
+            return FindIntersectionAfterAlignment(head1, head2, len2 - len1);
+    }
     
+    public Node FindIntersectionAfterAlignment(Node shorter, Node longer, int diff)
+    {
+        while(diff > 0) // O(N2-N1)
+        {
+            longer = longer.next;
+            diff--;
+        }
+        
+        while(shorter != null && longer != null) // O(N1)
+        {
+            if(shorter == longer)
+                return shorter;
+            shorter = shorter.next;
+            longer = longer.next;
+        }
+        
+        return null;
+    }
+    
+    // Optimal solution
+    public Node IntersectionNodeLL3(Node head1, Node head2)
+    {
+        if (head1 == null || head2 == null) return null;
+        
+        Node temp1 = head1, temp2 = head2;
+        
+        while(temp1 != temp2)
+        {
+            temp1 = temp1.next;
+            temp2 = temp2.next;
+            
+            if(temp1 == temp2)
+                return temp1;
+            
+            if(temp1 == null)
+                temp1 = head2;
+            
+            if(temp2 == null)
+                temp2 = head1;
+        }
+        
+        return temp1;
+    }
     
     public void PrintLinkedList(Node head)
     {
@@ -123,6 +199,27 @@ class Program
             
         Console.WriteLine();
         
+        // Testing better solution
+        Node answerNode2 = linkedList.IntersectionNodeLL2(head1, head2);
+        
+        Console.WriteLine("Better Solution: ");
+        if(answerNode2 != null)
+            Console.WriteLine($"The intersection point: {answerNode2.data}");
+        else
+            Console.WriteLine("There is no intersection point");
+            
+        Console.WriteLine();
+        
+        // Testing optimal solution
+        Node answerNode3 = linkedList.IntersectionNodeLL3(head1, head2);
+        
+        Console.WriteLine("Optimal Solution: ");
+        if(answerNode3 != null)
+            Console.WriteLine($"The intersection point: {answerNode3.data}");
+        else
+            Console.WriteLine("There is no intersection point");
+            
+        Console.WriteLine();
     }
 }
 
